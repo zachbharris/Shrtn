@@ -24,7 +24,7 @@ export default function Form() {
     const { data } = await res.json();
 
     setRedirect(data.id);
-    setPathUrl(`${window.location.href}/${data.id}`);
+    setPathUrl(`${window.location.href}${data.id}`);
     setUrl("");
     setStatus("idle");
   }
