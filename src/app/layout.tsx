@@ -1,12 +1,22 @@
+import { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Shrtn",
   description: "Simple Short URL Generator.",
-  "og:image": "/public/og-image.png",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://shrtn-zbh.vercel.app/",
+    images: [
+      {
+        url: "/og-image.png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
