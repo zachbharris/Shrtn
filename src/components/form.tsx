@@ -44,7 +44,7 @@ export default function Form() {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://example.com"
-          className="rounded-md px-4 py-2 bg-zinc-100 dark:bg-zinc-900"
+          className="rounded-md px-4 py-2 bg-zinc-100/70 dark:bg-zinc-900/70"
         />
       </label>
       <div className="relative block w-full">
@@ -68,7 +68,7 @@ export default function Form() {
       </div>
 
       {status !== "loading" && redirect ? (
-        <div className="flex flex-row w-full justify-between items-center p-4 bg-zinc-200 dark:bg-zinc-800 rounded-md">
+        <div className="flex flex-row w-full justify-between items-center p-4 bg-zinc-200/70 dark:bg-zinc-900/70 rounded-md">
           <span>{pathUrl}</span>
           <button onClick={handleCopy}>
             <Icon name="copy" />

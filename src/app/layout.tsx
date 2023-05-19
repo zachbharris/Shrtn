@@ -16,9 +16,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-300"
+      className="bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-300 h-full w-full"
     >
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${inter.className} h-full w-full flex items-start md:items-center justify-center`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
