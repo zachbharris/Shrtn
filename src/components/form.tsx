@@ -89,22 +89,26 @@ export default function Form() {
             type="submit"
             className={`relative flex flex-row w-full justify-center items-center text-zinc-50 bg-blue-500 enabled:hover:bg-blue-600 dark:bg-blue-700 dark:enabled:hover:bg-blue-800 px-4 py-2 rounded-md fill-blue-400 dark:fill-blue-700 transition-colors ease-in-out overflow-hidden h-10 focus:outline-none focus:ring focus:ring-blue-500`}
           >
-            <AnimatePresence initial={false} presenceAffectsLayout>
+            <AnimatePresence
+              initial={false}
+              mode="popLayout"
+              presenceAffectsLayout
+            >
               {status === "loading" ? (
                 <motion.div
                   key="loading"
-                  initial={{ y: -40, position: "absolute" }}
+                  initial={{ y: -40 }}
                   animate={{ y: 0 }}
-                  exit={{ y: 40, position: "absolute" }}
+                  exit={{ y: 40 }}
                 >
                   <Icon name="loading" className="animate-spin" />
                 </motion.div>
               ) : status === "success" ? (
                 <motion.div
                   key="success"
-                  initial={{ y: -40, position: "absolute" }}
-                  animate={{ y: 0, position: "relative" }}
-                  exit={{ y: 40, position: "absolute" }}
+                  initial={{ y: -40 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: 40 }}
                   className="grid grid-flow-col justify-between gap-2 items-center w-full"
                 >
                   <span className="text-ellipsis overflow-hidden whitespace-nowrap">
@@ -117,11 +121,9 @@ export default function Form() {
                   key="copied"
                   initial={{
                     y: -40,
-                    position: "absolute",
                   }}
                   animate={{
                     y: 0,
-                    position: "absolute",
                   }}
                   exit={{ y: 40, position: "absolute" }}
                   className="flex flex-row gap-2 items-center"
@@ -131,9 +133,9 @@ export default function Form() {
               ) : (
                 <motion.div
                   key="idle"
-                  initial={{ y: -40, position: "absolute" }}
+                  initial={{ y: -40 }}
                   animate={{ y: 0 }}
-                  exit={{ y: 40, position: "absolute" }}
+                  exit={{ y: 40 }}
                   className="flex flex-row gap-2 justify-center items-center"
                 >
                   <Icon name="magic" />
