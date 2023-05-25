@@ -1,22 +1,22 @@
 import prisma from "@/utils/prisma";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 type PageProps = {
   params: {
-    id: string;
+    ids: string[];
   };
 };
 
 export default async function Page({ params }: PageProps) {
-  const { id } = params;
+  const { ids } = params;
+  const [id] = ids;
 
   console.log(id);
 
   // fetch url from db
   const data = await prisma.url
     .findUnique({
-      where: { id: id[0] },
+      where: { id },
     })
     .catch((err) => {
       return notFound();
