@@ -72,7 +72,7 @@ export default function Form() {
             id="url"
             autoFocus
             placeholder="https://example.com"
-            className="rounded-md px-4 py-2 bg-zinc-200/90 dark:bg-zinc-800/70 focus:outline-none focus:ring focus:ring-blue-500"
+            className="rounded-md px-4 py-2 bg-zinc-200/90 dark:bg-zinc-800/70 outline-none focus-visible:outline-zinc-700"
           />
           {errors.url ? (
             <span className="h-4 text-red-500">
@@ -87,7 +87,7 @@ export default function Form() {
           <button
             disabled={status === "loading"}
             type="submit"
-            className={`relative flex flex-row w-full justify-center items-center text-zinc-50 bg-blue-500 enabled:hover:bg-blue-600 dark:bg-blue-700 dark:enabled:hover:bg-blue-800 px-4 py-2 rounded-md fill-blue-400 dark:fill-blue-700 transition-colors ease-in-out overflow-hidden h-10 focus:outline-none focus:ring focus:ring-blue-500`}
+            className={`relative flex flex-row w-full justify-center items-center text-zinc-50 bg-blue-500 enabled:hover:bg-blue-600 dark:bg-blue-700 dark:enabled:hover:bg-blue-800 px-4 py-2 rounded-md fill-blue-400 dark:fill-blue-700 transition-colors ease-in-out overflow-hidden h-10 outline-none focus-visible:outline-zinc-700`}
           >
             <AnimatePresence
               initial={false}
