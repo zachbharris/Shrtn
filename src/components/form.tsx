@@ -19,9 +19,7 @@ const formSchema = z.object({
 });
 
 export default function Form() {
-  const [pathUrl, setPathUrl] = useState(
-    "https://thisisareallylongurlthatkeepsgoingonforeverandireally.com/shouldfixthatyouknow"
-  );
+  const [pathUrl, setPathUrl] = useState("");
   const [status, setStatus] = useState<Status>("idle");
 
   const {
@@ -107,9 +105,9 @@ export default function Form() {
                   initial={{ y: -40, position: "absolute" }}
                   animate={{ y: 0 }}
                   exit={{ y: 40, position: "absolute" }}
-                  className="grid grid-flow-col justify-between gap-2 items-center"
+                  className="grid grid-flow-col justify-between gap-2 items-center w-full"
                 >
-                  <span className="text-ellipsis overflow-hidden ">
+                  <span className="text-ellipsis overflow-hidden whitespace-nowrap">
                     {pathUrl}
                   </span>
                   <Icon name="copy" />
@@ -148,16 +146,4 @@ export default function Form() {
       </form>
     </div>
   );
-}
-
-function useTextAnimation() {
-  const [scope, animate] = useAnimate();
-
-  animate(
-    "div",
-    { y: -40, position: "absolute" },
-    { duration: 0.5, delay: 0.25 }
-  );
-
-  return scope;
 }
