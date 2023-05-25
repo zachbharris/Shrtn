@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useAnimate } from "framer-motion";
 
 import Icon from "./icon";
 import { z } from "zod";
@@ -15,7 +15,7 @@ type Inputs = {
 type Status = "idle" | "loading" | "success" | "error" | "copied";
 
 const formSchema = z.object({
-  url: z.string().url().nonempty("URL can't be empty"),
+  url: z.string().url(),
 });
 
 export default function Form() {
@@ -61,13 +61,6 @@ export default function Form() {
     }
   };
 
-  function handleRestart() {
-    reset();
-    setStatus("idle");
-    setRedirect(undefined);
-    setPathUrl("");
-  }
-
   function handleCopy() {
     navigator.clipboard.writeText(pathUrl);
   }
@@ -82,9 +75,10 @@ export default function Form() {
               required: true,
             })}
             type="url"
+            id="url"
             autoFocus
             placeholder="https://example.com"
-            className="rounded-md px-4 py-2 bg-zinc-100/70 dark:bg-zinc-900/70 focus:outline-none focus :ring focus:ring-blue-500"
+            className="rounded-md px-4 py-2 bg-zinc-200/90 dark:bg-zinc-800/70 focus:outline-none focus:ring focus:ring-blue-500"
           />
           {errors.url ? (
             <span className="text-red-500">
@@ -94,19 +88,17 @@ export default function Form() {
         </label>
 
         <div className="relative flex flex-row gap-4">
-          <motion.button
+          <button
             disabled={status === "loading"}
             type="submit"
-            className={`relative flex flex-row w-full justify-center items-center text-zinc-50 bg-blue-500 enabled:hover:bg-blue-600 dark:bg-blue-700 dark:enabled:hover:bg-blue-800 px-4 py-2 rounded-md fill-blue-400 dark:fill-blue-700 transition-colors ease-in-out overflow-hidden h-10`}
-            initial={{ width: "100%" }}
-            animate={{ width: "100%" }}
+            className={`relative flex flex-row w-full justify-center items-center text-zinc-50 bg-blue-500 enabled:hover:bg-blue-600 dark:bg-blue-700 dark:enabled:hover:bg-blue-800 px-4 py-2 rounded-md fill-blue-400 dark:fill-blue-700 transition-colors ease-in-out overflow-hidden h-10 focus:outline-none focus:ring focus:ring-blue-500`}
           >
-            <AnimatePresence initial={false}>
+            <AnimatePresence initial={false} presenceAffectsLayout>
               {status === "loading" ? (
                 <motion.div
                   key="loading"
                   initial={{ y: -40, position: "absolute" }}
-                  animate={{ y: 0, position: "relative" }}
+                  animate={{ y: 0 }}
                   exit={{ y: 40, position: "absolute" }}
                 >
                   <Icon name="loading" className="animate-spin" />
@@ -115,7 +107,7 @@ export default function Form() {
                 <motion.div
                   key="success"
                   initial={{ y: -40, position: "absolute" }}
-                  animate={{ y: 0, position: "relative" }}
+                  animate={{ y: 0 }}
                   exit={{ y: 40, position: "absolute" }}
                   className="grid grid-flow-col justify-between gap-2 items-center"
                 >
@@ -127,13 +119,18 @@ export default function Form() {
               ) : status === "copied" ? (
                 <motion.div
                   key="copied"
-                  initial={{ y: -40, position: "absolute" }}
-                  animate={{ y: 0, position: "relative" }}
+                  initial={{
+                    y: -40,
+                    position: "absolute",
+                  }}
+                  animate={{
+                    y: 0,
+                    position: "absolute",
+                  }}
                   exit={{ y: 40, position: "absolute" }}
                   className="flex flex-row gap-2 items-center"
                 >
                   <Icon name="check" />
-                  <span>Copied</span>
                 </motion.div>
               ) : (
                 <motion.div
@@ -148,24 +145,21 @@ export default function Form() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.button>
-
-          <AnimatePresence>
-            {!["idle", "loading"].includes(status) ? (
-              <motion.button
-                key="restart"
-                initial={{ x: 100, opacity: 0, position: "absolute" }}
-                animate={{ x: 0, opacity: 1, position: "relative" }}
-                type="button"
-                onClick={handleRestart}
-                className="inline-flex flex-row justify-center items-center bg-transparent hover:bg-zinc-900/10 hover:dark:bg-zinc-100/10 h-10 rounded-md px-4 transition-colors ease-in-out"
-              >
-                <Icon name="refresh" />
-              </motion.button>
-            ) : null}
-          </AnimatePresence>
+          </button>
         </div>
       </form>
     </div>
   );
+}
+
+function useTextAnimation() {
+  const [scope, animate] = useAnimate();
+
+  animate(
+    "div",
+    { y: -40, position: "absolute" },
+    { duration: 0.5, delay: 0.25 }
+  );
+
+  return scope;
 }
