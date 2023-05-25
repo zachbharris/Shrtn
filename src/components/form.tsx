@@ -103,7 +103,7 @@ export default function Form() {
                 <motion.div
                   key="success"
                   initial={{ y: -40, position: "absolute" }}
-                  animate={{ y: 0 }}
+                  animate={{ y: 0, position: "relative" }}
                   exit={{ y: 40, position: "absolute" }}
                   className="grid grid-flow-col justify-between gap-2 items-center w-full"
                 >
