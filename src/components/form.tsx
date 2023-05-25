@@ -15,7 +15,7 @@ type Inputs = {
 type Status = "idle" | "loading" | "success" | "error" | "copied";
 
 const formSchema = z.object({
-  url: z.string().url(),
+  url: z.string().startsWith("http", "URL must start with http(s)").url(),
 });
 
 export default function Form() {
@@ -23,7 +23,6 @@ export default function Form() {
     "https://thisisareallylongurlthatkeepsgoingonforeverandireally.com/shouldfixthatyouknow"
   );
   const [status, setStatus] = useState<Status>("idle");
-  const [redirect, setRedirect] = useState();
 
   const {
     register,
@@ -52,9 +51,7 @@ export default function Form() {
 
         const { data } = await res.json();
 
-        setRedirect(data.id);
         setPathUrl(`${window.location.href}${data.id}`);
-        setStatus("success");
         setStatus("success");
         break;
       }
@@ -74,17 +71,18 @@ export default function Form() {
             {...register("url", {
               required: true,
             })}
-            type="url"
             id="url"
             autoFocus
             placeholder="https://example.com"
             className="rounded-md px-4 py-2 bg-zinc-200/90 dark:bg-zinc-800/70 focus:outline-none focus:ring focus:ring-blue-500"
           />
           {errors.url ? (
-            <span className="text-red-500">
+            <span className="h-4 text-red-500">
               {errors.url.message ?? "Something went wrong."}
             </span>
-          ) : null}
+          ) : (
+            <span className="inline-block h-4" />
+          )}
         </label>
 
         <div className="relative flex flex-row gap-4">
